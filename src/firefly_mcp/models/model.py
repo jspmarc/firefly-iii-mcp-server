@@ -1444,6 +1444,7 @@ class AutoBudgetPeriod(RootModel[Optional[AutoBudgetPeriodEnum]]):
 class AutoBudgetTypeEnum(Enum):
     reset = 'reset'
     rollover = 'rollover'
+    adjusted = 'adjusted'
     none = 'none'
 
 
