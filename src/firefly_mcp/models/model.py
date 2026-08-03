@@ -29,7 +29,7 @@ class AutocompleteAccount(BaseModel):
         description='Account type of the account found by the auto-complete search.',
         examples=['Asset account'],
     )
-    currency_id: str = Field(
+    currency_id: int = Field(
         ...,
         description='ID for the currency used by this account. If the user prefers amounts converted to their native currency, this native currency is used instead.',
         examples=['12'],
@@ -54,7 +54,7 @@ class AutocompleteAccount(BaseModel):
         description='Number of decimal places for the currency used by this account. If the user prefers amounts converted to their native currency, this native currency is used instead.',
         examples=[2],
     )
-    account_currency_id: Optional[str] = Field(
+    account_currency_id: Optional[int] = Field(
         None,
         description='ID for the currency used by this account. Even if "convertToNative" is on, the account currency ID is displayed here.',
         examples=['2'],
@@ -152,7 +152,7 @@ class AutocompletePiggy(BaseModel):
         description='Name of the piggy bank found by an auto-complete search.',
         examples=['New couch'],
     )
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None,
         description="Currency ID for this piggy bank. This will always be the currency of the piggy bank, never the user's native currency.",
         examples=['12'],
@@ -197,7 +197,7 @@ class AutocompletePiggyBalance(BaseModel):
         description='Name of the piggy bank found by an auto-complete search, including the currently saved amount and the target amount.',
         examples=['New couch ($234.56 / $600)'],
     )
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None,
         description="Currency ID for the currency used by this piggy bank. This will always be the piggy bank's currency, never the native currency.",
         examples=['12'],
@@ -355,7 +355,7 @@ class ChartDataSet(BaseModel):
         description='This is the title of the current set. It can refer to an account, a budget or another object (by name).',
         examples=['Checking account'],
     )
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None,
         description='The currency ID of the currency associated to the data in the entries. This may be the native currency of administration.',
         examples=['5'],
@@ -469,7 +469,7 @@ class InsightGroupEntry(BaseModel):
         description='The amount spent or earned between start date and end date, a number as a float, for this object and all asset accounts. May have rounding errors.',
         examples=[-123.45],
     )
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None,
         description='The currency ID of the expenses listed for this account.',
         examples=['5'],
@@ -492,7 +492,7 @@ class InsightTotalEntry(BaseModel):
         description='The amount spent between start date and end date, defined as a string, for this expense account and all asset accounts. This number is a float (double) and may have rounding errors.',
         examples=[123.45],
     )
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None,
         description='The currency ID of the expenses listed for this expense account.',
         examples=['5'],
@@ -544,7 +544,7 @@ class InsightTransferEntry(BaseModel):
         description='The total amount transferred TO this account between start date and end date, a number as a float, for this asset account. May have rounding errors.',
         examples=[123.45],
     )
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None,
         description='The currency ID of the expenses listed for this account.',
         examples=['5'],
@@ -589,7 +589,7 @@ class BudgetLimit(BaseModel):
         description='End date of the budget limit.',
         examples=['2018-09-17T12:46:47+01:00'],
     )
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None,
         description="Use either currency_id or currency_code. Defaults to the user's default currency.",
         examples=['5'],
@@ -602,7 +602,7 @@ class BudgetLimit(BaseModel):
     currency_name: Optional[str] = Field(None, examples=['Euro'])
     currency_symbol: Optional[str] = Field(None, examples=['$'])
     currency_decimal_places: Optional[int] = Field(None, examples=[2])
-    native_currency_id: Optional[str] = Field(
+    native_currency_id: Optional[int] = Field(
         None, description="The administration's native currency ID.", examples=['5']
     )
     native_currency_code: Optional[str] = Field(
@@ -643,7 +643,7 @@ class BudgetLimit(BaseModel):
 
 
 class BudgetLimitStore(BaseModel):
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None,
         description="Use either currency_id or currency_code. Defaults to the user's default currency.",
         examples=['5'],
@@ -681,7 +681,7 @@ class BudgetSpent(BaseModel):
         description="The amount spent. This is in the administration's native currency, if the conversion is turned on.",
         examples=['123.45'],
     )
-    currency_id: Optional[str] = Field(None, examples=['5'])
+    currency_id: Optional[int] = Field(None, examples=['5'])
     currency_code: Optional[str] = Field(None, examples=['USD'])
     currency_symbol: Optional[str] = Field(None, examples=['$'])
     currency_decimal_places: Optional[int] = Field(
@@ -695,7 +695,7 @@ class CategoryUpdate(BaseModel):
 
 
 class CategoryEarned(BaseModel):
-    currency_id: Optional[str] = Field(None, examples=['5'])
+    currency_id: Optional[int] = Field(None, examples=['5'])
     currency_code: Optional[str] = Field(None, examples=['USD'])
     currency_symbol: Optional[str] = Field(None, examples=['$'])
     currency_decimal_places: Optional[int] = Field(
@@ -707,7 +707,7 @@ class CategoryEarned(BaseModel):
 
 
 class CategorySpent(BaseModel):
-    currency_id: Optional[str] = Field(None, examples=['5'])
+    currency_id: Optional[int] = Field(None, examples=['5'])
     currency_code: Optional[str] = Field(None, examples=['USD'])
     currency_symbol: Optional[str] = Field(None, examples=['$'])
     currency_decimal_places: Optional[int] = Field(
@@ -721,7 +721,7 @@ class CategorySpent(BaseModel):
 class CurrencyExchangeRateReadAttributes(BaseModel):
     created_at: Optional[datetime] = Field(None, examples=['2018-09-17T12:46:47+01:00'])
     updated_at: Optional[datetime] = Field(None, examples=['2018-09-17T12:46:47+01:00'])
-    from_currency_id: Optional[str] = Field(
+    from_currency_id: Optional[int] = Field(
         None,
         description='Base currency ID for this exchange rate entry.',
         examples=['12'],
@@ -741,10 +741,10 @@ class CurrencyExchangeRateReadAttributes(BaseModel):
         description='Base currency decimal places for this exchange rate entry.',
         examples=[2],
     )
-    to_currency_id: Optional[str] = Field(
+    to_currency_id: Optional[int] = Field(
         None,
         description='Destination currency ID for this exchange rate entry.',
-        examples=['12'],
+        examples=[12],
     )
     to_currency_code: Optional[str] = Field(
         None,
@@ -913,7 +913,7 @@ class PiggyBankStore(BaseModel):
 class PiggyBankUpdate(BaseModel):
     name: Optional[str] = Field(None, examples=['New digital camera'])
     accounts: Optional[List[PiggyBankAccountUpdate]] = None
-    currency_id: Optional[str] = Field(None, examples=['5'])
+    currency_id: Optional[int] = Field(None, examples=[5])
     currency_code: Optional[str] = Field(None, examples=['USD'])
     target_amount: Optional[str] = Field(None, examples=['123.45'])
     start_date: Optional[date_aliased] = Field(
@@ -944,7 +944,7 @@ class PiggyBankUpdate(BaseModel):
 class PiggyBankEvent(BaseModel):
     created_at: Optional[datetime] = Field(None, examples=['2018-09-17T12:46:47+01:00'])
     updated_at: Optional[datetime] = Field(None, examples=['2018-09-17T12:46:47+01:00'])
-    currency_id: Optional[str] = Field(None, examples=['5'])
+    currency_id: Optional[int] = Field(None, examples=[5])
     currency_code: Optional[str] = Field(None, examples=['EUR'])
     currency_symbol: Optional[str] = Field(None, examples=['$'])
     currency_decimal_places: Optional[int] = Field(None, examples=[2])
@@ -967,7 +967,7 @@ class RecurrenceTransactionStore(BaseModel):
     foreign_amount: Optional[str] = Field(
         None, description='Foreign amount of the transaction.', examples=['123.45']
     )
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None,
         description='Submit either a currency_id or a currency_code.',
         examples=['3'],
@@ -977,7 +977,7 @@ class RecurrenceTransactionStore(BaseModel):
         description='Submit either a currency_id or a currency_code.',
         examples=['EUR'],
     )
-    foreign_currency_id: Optional[str] = Field(
+    foreign_currency_id: Optional[int] = Field(
         None,
         description='Submit either a foreign_currency_id or a foreign_currency_code, or neither.',
         examples=['17'],
@@ -1022,7 +1022,7 @@ class RecurrenceTransactionUpdate(BaseModel):
     foreign_amount: Optional[str] = Field(
         None, description='Foreign amount of the transaction.', examples=['123.45']
     )
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None,
         description='Submit either a currency_id or a currency_code.',
         examples=['3'],
@@ -1032,7 +1032,7 @@ class RecurrenceTransactionUpdate(BaseModel):
         description='Submit either a currency_id or a currency_code.',
         examples=['EUR'],
     )
-    foreign_currency_id: Optional[str] = Field(
+    foreign_currency_id: Optional[int] = Field(
         None,
         description='Submit either a foreign_currency_id or a foreign_currency_code, or neither.',
         examples=['17'],
@@ -1356,7 +1356,7 @@ class UserGroupUpdate(BaseModel):
         description='A descriptive title for the user group.',
         examples=['New user group title'],
     )
-    native_currency_id: Optional[str] = Field(
+    native_currency_id: Optional[int] = Field(
         None,
         description="Use either native_currency_id or native_currency_code. This will set the native currency for the user group ('financial administration').",
         examples=['1'],
@@ -1607,7 +1607,7 @@ class BasicSummaryEntry(BaseModel):
     monetary_value: Optional[float] = Field(
         None, description='The amount as a float.', examples=[123.45]
     )
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None, description='The currency ID of the associated currency.', examples=['5']
     )
     currency_code: Optional[str] = Field(None, examples=['EUR'])
@@ -2068,7 +2068,7 @@ class Account(BaseModel):
     name: str = Field(..., examples=['My checking account'])
     type: ShortAccountTypeProperty
     account_role: Optional[AccountRoleProperty] = None
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None,
         description="Use either currency_id or currency_code. Defaults to the user's default currency.",
         examples=['12'],
@@ -2080,7 +2080,7 @@ class Account(BaseModel):
     )
     currency_symbol: Optional[str] = Field(None, examples=['$'])
     currency_decimal_places: Optional[int] = Field(None, examples=[2])
-    native_currency_id: Optional[str] = Field(
+    native_currency_id: Optional[int] = Field(
         None,
         description='Returns the native currency ID of the administration.',
         examples=['12'],
@@ -2200,7 +2200,7 @@ class AccountStore(BaseModel):
         examples=['2018-09-17T12:46:47+01:00'],
     )
     virtual_balance: Optional[str] = Field(None, examples=['123.45'])
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None,
         description="Use either currency_id or currency_code. Defaults to the user's default currency.",
         examples=['12'],
@@ -2260,7 +2260,7 @@ class AccountUpdate(BaseModel):
         None, examples=['2018-09-17T12:46:47+01:00']
     )
     virtual_balance: Optional[str] = Field(None, examples=['123.45'])
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None,
         description="Use either currency_id or currency_code. Defaults to the user's default currency.",
         examples=['12'],
@@ -2356,7 +2356,7 @@ class AttachmentStore(BaseModel):
 class AvailableBudget(BaseModel):
     created_at: Optional[datetime] = Field(None, examples=['2018-09-17T12:46:47+01:00'])
     updated_at: Optional[datetime] = Field(None, examples=['2018-09-17T12:46:47+01:00'])
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None, description='Use either currency_id or currency_code.', examples=['5']
     )
     currency_code: Optional[str] = Field(
@@ -2364,7 +2364,7 @@ class AvailableBudget(BaseModel):
     )
     currency_symbol: Optional[str] = Field(None, examples=['$'])
     currency_decimal_places: Optional[int] = Field(None, examples=[2])
-    native_currency_id: Optional[str] = Field(
+    native_currency_id: Optional[int] = Field(
         None,
         description="The currency ID of the administration's native currency.",
         examples=['5'],
@@ -2407,7 +2407,7 @@ class AvailableBudget(BaseModel):
 class Bill(BaseModel):
     created_at: Optional[datetime] = Field(None, examples=['2018-09-17T12:46:47+01:00'])
     updated_at: Optional[datetime] = Field(None, examples=['2018-09-17T12:46:47+01:00'])
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None, description='Use either currency_id or currency_code', examples=['5']
     )
     currency_code: Optional[str] = Field(
@@ -2415,7 +2415,7 @@ class Bill(BaseModel):
     )
     currency_symbol: Optional[str] = Field(None, examples=['$'])
     currency_decimal_places: Optional[int] = Field(None, examples=[2])
-    native_currency_id: Optional[str] = Field(
+    native_currency_id: Optional[int] = Field(
         None, description="The administration's native currency ID.", examples=['5']
     )
     native_currency_code: Optional[str] = Field(
@@ -2499,7 +2499,7 @@ class Bill(BaseModel):
 
 
 class BillStore(BaseModel):
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None, description='Use either currency_id or currency_code', examples=['5']
     )
     currency_code: Optional[str] = Field(
@@ -2542,7 +2542,7 @@ class BillStore(BaseModel):
 
 
 class BillUpdate(BaseModel):
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None, description='Use either currency_id or currency_code', examples=['5']
     )
     currency_code: Optional[str] = Field(
@@ -2592,7 +2592,7 @@ class Budget(BaseModel):
     notes: Optional[str] = Field(None, examples=['Some notes'])
     order: Optional[int] = Field(None, examples=[5])
     auto_budget_type: Optional[AutoBudgetType] = None
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None,
         description="The currency ID that is part of the budget's auto-budget settings, if any.",
         examples=['12'],
@@ -2612,7 +2612,7 @@ class Budget(BaseModel):
         description="The currency decimal places that is part of the budget's auto-budget settings, if any.",
         examples=[2],
     )
-    native_currency_id: Optional[str] = Field(
+    native_currency_id: Optional[int] = Field(
         None, description="The administration's native currency ID.", examples=['5']
     )
     native_currency_code: Optional[str] = Field(
@@ -2649,7 +2649,7 @@ class BudgetStore(BaseModel):
     order: Optional[int] = Field(None, examples=[5])
     notes: Optional[str] = Field(None, examples=['Some notes'])
     auto_budget_type: Optional[AutoBudgetType] = None
-    auto_budget_currency_id: Optional[str] = Field(
+    auto_budget_currency_id: Optional[int] = Field(
         None,
         description="Use either currency_id or currency_code. Defaults to the user's default currency.",
         examples=['12'],
@@ -2669,7 +2669,7 @@ class BudgetUpdate(BaseModel):
     order: Optional[int] = Field(None, examples=[5])
     notes: Optional[str] = Field(None, examples=['Some notes'])
     auto_budget_type: Optional[AutoBudgetType] = None
-    auto_budget_currency_id: Optional[str] = Field(
+    auto_budget_currency_id: Optional[int] = Field(
         None,
         description="Use either currency_id or currency_code. Defaults to the user's default currency.",
         examples=['12'],
@@ -2688,7 +2688,7 @@ class Category(BaseModel):
     updated_at: Optional[datetime] = Field(None, examples=['2018-09-17T12:46:47+01:00'])
     name: str = Field(..., examples=['Lunch'])
     notes: Optional[str] = Field(None, examples=['Some example notes'])
-    native_currency_id: Optional[str] = Field(
+    native_currency_id: Optional[int] = Field(
         None, description="The administration's native currency ID.", examples=['5']
     )
     native_currency_code: Optional[str] = Field(
@@ -2724,7 +2724,7 @@ class PiggyBank(BaseModel):
     updated_at: Optional[datetime] = Field(None, examples=['2018-09-17T12:46:47+01:00'])
     name: str = Field(..., examples=['New digital camera'])
     accounts: Optional[List[PiggyBankAccountRead]] = None
-    currency_id: Optional[str] = Field(None, examples=['5'])
+    currency_id: Optional[int] = Field(None, examples=['5'])
     currency_code: Optional[str] = Field(None, examples=['USD'])
     currency_symbol: Optional[str] = Field(None, examples=['$'])
     currency_decimal_places: Optional[int] = Field(
@@ -2848,7 +2848,7 @@ class RecurrenceTransaction(BaseModel):
     foreign_amount: Optional[str] = Field(
         None, description='Foreign amount of the transaction.', examples=['123.45']
     )
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None,
         description='Submit either a currency_id or a currency_code.',
         examples=['3'],
@@ -2862,7 +2862,7 @@ class RecurrenceTransaction(BaseModel):
     currency_decimal_places: Optional[int] = Field(
         None, description='Number of decimals in the currency', examples=[2]
     )
-    foreign_currency_id: Optional[str] = Field(
+    foreign_currency_id: Optional[int] = Field(
         None,
         description='Submit either a foreign_currency_id or a foreign_currency_code, or neither.',
         examples=['17'],
@@ -3075,7 +3075,7 @@ class TransactionSplit(BaseModel):
         description='Order of this entry in the list of transactions.',
         examples=[0],
     )
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None,
         description="Currency ID. Default is the source account's currency, or the user's default currency. Can be used instead of currency_code.",
         examples=['12'],
@@ -3090,7 +3090,7 @@ class TransactionSplit(BaseModel):
     currency_decimal_places: Optional[int] = Field(
         None, description='Number of decimals used in this currency.', examples=[2]
     )
-    foreign_currency_id: Optional[str] = Field(
+    foreign_currency_id: Optional[int] = Field(
         None,
         description='Currency ID of the foreign currency. Default is null. Is required when you submit a foreign amount.',
         examples=['17'],
@@ -3257,7 +3257,7 @@ class TransactionSplitStore(BaseModel):
         description='Order of this entry in the list of transactions.',
         examples=[0],
     )
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None,
         description="Currency ID. Default is the source account's currency, or the user's default currency. The value you submit may be overruled by the source or destination account.",
         examples=['12'],
@@ -3270,7 +3270,7 @@ class TransactionSplitStore(BaseModel):
     foreign_amount: Optional[str] = Field(
         None, description='The amount in a foreign currency.', examples=['123.45']
     )
-    foreign_currency_id: Optional[str] = Field(
+    foreign_currency_id: Optional[int] = Field(
         None,
         description='Currency ID of the foreign currency. Default is null. Is required when you submit a foreign amount.',
         examples=['17'],
@@ -3393,7 +3393,7 @@ class TransactionSplitUpdate(BaseModel):
         description='Order of this entry in the list of transactions.',
         examples=[0],
     )
-    currency_id: Optional[str] = Field(
+    currency_id: Optional[int] = Field(
         None,
         description="Currency ID. Default is the source account's currency, or the user's default currency. Can be used instead of currency_code.",
         examples=['12'],
@@ -3411,7 +3411,7 @@ class TransactionSplitUpdate(BaseModel):
     foreign_amount: Optional[str] = Field(
         None, description='The amount in a foreign currency.', examples=['123.45']
     )
-    foreign_currency_id: Optional[str] = Field(
+    foreign_currency_id: Optional[int] = Field(
         None,
         description='Currency ID of the foreign currency. Default is null. Is required when you submit a foreign amount.',
         examples=['17'],
@@ -4106,7 +4106,7 @@ class UserGroupReadAttributes(BaseModel):
         description="Title of the user group. By default, it is the same as the user's email address.",
         examples=['demo@firefly'],
     )
-    native_currency_id: Optional[str] = Field(
+    native_currency_id: Optional[int] = Field(
         None,
         description='Returns the native currency ID of the user group.',
         examples=['12'],
