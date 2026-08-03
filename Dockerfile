@@ -9,4 +9,7 @@ RUN uv sync
 
 RUN pip install mcpo
 
-CMD ["uvx", "--with", "mcp<2", "mcpo", "--host", "0.0.0.0", "--port", "8000", "--", "uv", "run", "firefly-mcp"]
+COPY entrypoint.sh /usr/local/bin
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["entrypoint.sh"]
