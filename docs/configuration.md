@@ -100,6 +100,52 @@ FIREFLY_ENABLED_ENTITIES=account,budget,category,tag
 
 Available levels: `DEBUG`, `INFO`, `WARNING`, `ERROR`
 
+## Transport & Deployment
+
+The server supports two MCP transports, selectable with the `--transport` CLI flag:
+
+| Transport | When to use |
+|-----------|-------------|
+| `stdio` (default) | Local clients that launch the server as a subprocess (Claude Desktop, Cursor, VS Code, MCP Inspector) |
+| `streamable-http` | Expose the server as a networked web service reachable by URL over the Streamable HTTP protocol |
+
+### Streaming HTTP (Streamable HTTP)
+
+Start the server as a Streamable HTTP endpoint (served with Uvicorn):
+
+```bash
+uv run firefly-mcp --transport streamable-http --host 0.0.0.0 --port 8000
+```
+
+Connect any MCP client to `http://<host>:8000/mcp`.
+
+| CLI flag | Default | Description |
+|----------|---------|-------------|
+| `--transport` | `stdio` | `stdio` or `streamable-http` |
+| `--host` | `0.0.0.0` | Interface to bind for HTTP transports |
+| `--port` | `8000` | Port to bind for HTTP transports |
+| `--path` | `/mcp` | Optional base path for the HTTP endpoint |
+
+### Docker
+
+The container starts in Streamable HTTP mode by default (no external proxy
+required). The transport, host, port and path are configurable via environment:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `FIREFLY_MCP_TRANSPORT` | `streamable-http` | `streamable-http` or `stdio` |
+| `FIREFLY_MCP_HOST` | `0.0.0.0` | Bind host |
+| `FIREFLY_MCP_PORT` | `8000` | Bind port |
+| `FIREFLY_MCP_PATH` | `/mcp` | Optional base path for the MCP endpoint |
+
+```bash
+docker run -p 8000:8000 \
+  -e FIREFLY_API_URL=https://your-firefly-instance.com/api/v1 \
+  -e FIREFLY_API_TOKEN=your_token_here \
+  -e FIREFLY_ENABLED_ENTITIES=all \
+  firefly-mcp
+```
+
 ## Validation
 
 Test your configuration:

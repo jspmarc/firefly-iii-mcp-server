@@ -9,8 +9,8 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "datamodel-code-generator>=0.32.0",
-    "fastmcp>=2.11.0",
+    "datamodel-code-generator>=0.79.0",
+    "fastmcp>=4.0.3",
     "httpx>=0.28.1",
 ]
 
@@ -19,7 +19,7 @@ firefly-mcp = "firefly_mcp.main:main"
 
 [dependency-groups]
 dev = [
-    "openapi-python-client>=0.25.3",
+    "openapi-python-client>=0.29.1",
     "pytest>=8.4.1",
     "pytest-asyncio>=1.1.0",
     "pytest-cov>=6.2.1",

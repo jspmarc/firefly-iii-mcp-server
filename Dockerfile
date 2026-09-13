@@ -7,9 +7,11 @@ WORKDIR /app
 
 RUN uv sync
 
-RUN pip install mcpo
-
 COPY entrypoint.sh /usr/local/bin
 RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Default to the Streamable HTTP transport; supports stdio via FIREFLY_MCP_TRANSPORT.
+ENV FIREFLY_MCP_TRANSPORT=streamable-http
+EXPOSE 8000
 
 ENTRYPOINT ["entrypoint.sh"]

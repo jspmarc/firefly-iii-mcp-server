@@ -23,6 +23,7 @@ This MCP server enables AI assistants to interact with your Firefly III instance
 - **🤖 AI Integration**: Works seamlessly with Claude Desktop, Cursor IDE, and other MCP clients
 - **💡 Comprehensive API**: Supports most Firefly III v1 API endpoints
 - **⚡ Flexible modes**: Choose between consolidated tools or direct API access
+- **🌐 Multiple transports**: Run over `stdio` for local clients or expose the server as a **Streamable HTTP** web service (no proxy required)
 - **🔒 Type-safe**: Full Pydantic model validation for all requests/responses
 - **🎯 Configurable**: Enable only the Firefly III entities you need
 
@@ -192,10 +193,29 @@ make test-integration
 # Development with .env file
 make dev
 
-# Direct execution
+# Direct execution (stdio transport - default for local clients)
 uv run firefly-mcp
 python -m firefly_mcp.main
+
+# Run as a Streamable HTTP web service
+uv run firefly-mcp --transport streamable-http --host 0.0.0.0 --port 8000
 ```
+
+### Streamable HTTP Transport
+
+Beyond `stdio`, the server natively supports the **Streamable HTTP** MCP transport, so
+it can run as a networked web service reachable by URL — with no external proxy
+required.
+
+```bash
+# Start the server over Streamable HTTP
+uv run firefly-mcp --transport streamable-http --host 0.0.0.0 --port 8000
+```
+
+Point any Streamable HTTP MCP client at `http://<host>:8000/mcp`. The Docker
+container starts in Streamable HTTP mode by default (`FIREFLY_MCP_TRANSPORT`,
+`FIREFLY_MCP_HOST`, `FIREFLY_MCP_PORT`, `FIREFLY_MCP_PATH` are configurable).
+See the [configuration guide](https://horsfallnathan.github.io/firefly-iii-mcp-server/configuration/) for details.
 
 ## 📋 Environment Variables Reference
 
@@ -207,6 +227,10 @@ python -m firefly_mcp.main
 | `FIREFLY_DIRECT_MODE` | `false` | Enable individual tools for each operation |
 | `FIREFLY_ENABLED_ENTITIES` | `account` | Comma-separated list of entities to enable |
 | `FIREFLY_LOG_LEVEL` | `INFO` | Logging level (DEBUG, INFO, WARNING, ERROR) |
+| `FIREFLY_MCP_TRANSPORT` | `streamable-http` | Launcher transport (`streamable-http` or `stdio`) |
+| `FIREFLY_MCP_HOST` | `0.0.0.0` | Launcher bind host for HTTP transports |
+| `FIREFLY_MCP_PORT` | `8000` | Launcher bind port for HTTP transports |
+| `FIREFLY_MCP_PATH` | `/mcp` | Launcher base path for the HTTP endpoint |
 
 
 ## 🎯 API Compatibility
