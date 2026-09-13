@@ -208,14 +208,14 @@ it can run as a networked web service reachable by URL — with no external prox
 required.
 
 ```bash
-# Start the server over Streamable HTTP
+# Start the server over Streamable HTTP (endpoint served at /mcp by default)
 uv run firefly-mcp --transport streamable-http --host 0.0.0.0 --port 8000
+
+# Or mount the endpoint at the root path
+uv run firefly-mcp --transport streamable-http --host 0.0.0.0 --port 8000 --path /
 ```
 
-Point any Streamable HTTP MCP client at `http://<host>:8000/mcp`. The Docker
-container starts in Streamable HTTP mode by default (`FIREFLY_MCP_TRANSPORT`,
-`FIREFLY_MCP_HOST`, `FIREFLY_MCP_PORT`, `FIREFLY_MCP_PATH` are configurable).
-See the [configuration guide](https://horsfallnathan.github.io/firefly-iii-mcp-server/configuration/) for details.
+Point any Streamable HTTP MCP client at `http://<host>:8000/mcp` (or `http://<host>:8000/` when started with `--path /`). The Docker container starts in Streamable HTTP mode by default with the endpoint at the root `/` (`FIREFLY_MCP_TRANSPORT`, `FIREFLY_MCP_HOST`, `FIREFLY_MCP_PORT`, `FIREFLY_MCP_PATH` are configurable). See the [configuration guide](https://horsfallnathan.github.io/firefly-iii-mcp-server/configuration/) for details.
 
 ## 📋 Environment Variables Reference
 
@@ -230,7 +230,7 @@ See the [configuration guide](https://horsfallnathan.github.io/firefly-iii-mcp-s
 | `FIREFLY_MCP_TRANSPORT` | `streamable-http` | Launcher transport (`streamable-http` or `stdio`) |
 | `FIREFLY_MCP_HOST` | `0.0.0.0` | Launcher bind host for HTTP transports |
 | `FIREFLY_MCP_PORT` | `8000` | Launcher bind port for HTTP transports |
-| `FIREFLY_MCP_PATH` | `/mcp` | Launcher base path for the HTTP endpoint |
+| `FIREFLY_MCP_PATH` | `/` | Launcher mount path for the HTTP endpoint |
 
 
 ## 🎯 API Compatibility

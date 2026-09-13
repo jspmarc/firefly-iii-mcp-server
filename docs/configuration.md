@@ -117,7 +117,7 @@ Start the server as a Streamable HTTP endpoint (served with Uvicorn):
 uv run firefly-mcp --transport streamable-http --host 0.0.0.0 --port 8000
 ```
 
-Connect any MCP client to `http://<host>:8000/mcp`.
+Connect any MCP client to `http://<host>:8000/mcp` (or `http://<host>:8000/` when started with `--path /`).
 
 | CLI flag | Default | Description |
 |----------|---------|-------------|
@@ -129,14 +129,17 @@ Connect any MCP client to `http://<host>:8000/mcp`.
 ### Docker
 
 The container starts in Streamable HTTP mode by default (no external proxy
-required). The transport, host, port and path are configurable via environment:
+required) and serves the MCP endpoint at the root path `/`, which is what a
+reverse proxy typically delivers after stripping its own path prefix (e.g.
+Caddy `handle_path /firefly/*`). Transport, host, port and mount path are
+configurable via environment:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `FIREFLY_MCP_TRANSPORT` | `streamable-http` | `streamable-http` or `stdio` |
 | `FIREFLY_MCP_HOST` | `0.0.0.0` | Bind host |
 | `FIREFLY_MCP_PORT` | `8000` | Bind port |
-| `FIREFLY_MCP_PATH` | `/mcp` | Optional base path for the MCP endpoint |
+| `FIREFLY_MCP_PATH` | `/` | Mount path for the MCP endpoint (set to a sub-path like `/mcp` if the server must not serve at the root) |
 
 ```bash
 docker run -p 8000:8000 \
